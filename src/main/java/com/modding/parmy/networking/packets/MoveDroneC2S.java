@@ -39,6 +39,9 @@ public class MoveDroneC2S {
         NetworkEvent.Context context = supplier.get();
         context.enqueueWork(() -> {
             ServerPlayer player = context.getSender();
+            // player.setEntityOnShoulder(null)
+            // player.setCame
+            // player.
             if(player != null) {
                 if(direction != null) {
                     moveEntity(direction, 0.2, yAngle, xAngle);

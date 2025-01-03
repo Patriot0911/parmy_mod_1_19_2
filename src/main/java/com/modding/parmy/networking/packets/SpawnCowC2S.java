@@ -10,6 +10,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.protocol.game.ClientboundSetCameraPacket;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.phys.Vec3;
@@ -45,7 +46,11 @@ public class SpawnCowC2S {
             RenderSystem.getModelViewStack().setIdentity();
             RenderSystem.applyModelViewMatrix();
 
-            player.setCamera(ParmyMod.specEnt);
+            // player.teleportTo(0, 0, 0);
+            // player.setCamera(ParmyMod.specEnt);
+            player.connection.send(
+                new ClientboundSetCameraPacket(ParmyMod.specEnt)
+            );
             // mc.setCameraEntity(ParmyMod.specEnt);
         });
         return true;

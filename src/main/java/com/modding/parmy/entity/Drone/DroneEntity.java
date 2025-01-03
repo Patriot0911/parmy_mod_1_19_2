@@ -50,7 +50,6 @@ public class DroneEntity extends FlyingMob implements IAnimatable {
 
     @SuppressWarnings("removal")
     private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
-        System.out.println("ID_TAG");
         if (event.isMoving()) {
             event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.drone.moving", true));
             return PlayState.CONTINUE;

@@ -1,5 +1,7 @@
 package com.modding.parmy.events;
 
+import org.lwjgl.glfw.GLFW;
+
 import com.modding.parmy.ParmyMod;
 import com.modding.parmy.networking.NetworkManager;
 import com.modding.parmy.networking.packets.MoveDroneC2S;
@@ -22,6 +24,11 @@ public class ClientEvents {
     public static class ClientForgeEvents {
         @SubscribeEvent
         public static void onKeyInput(InputEvent.Key event) {
+            // if (event.getKey() == GLFW.GLFW_KEY_LEFT_SHIFT && event.getAction() == GLFW.GLFW_PRESS) {
+                // System.out.println("TRIED TO BLOCK");
+                // event.setCanceled(true);
+            // }
+
             if(KeyBinding.SPAWN_DRONE_KEY.isDown()) {
                 System.out.println("tested2");
                 if(ParmyMod.specEnt == null) {
@@ -37,12 +44,21 @@ public class ClientEvents {
         }
         @SubscribeEvent
         public static void onClientTick(TickEvent.ClientTickEvent event) {
+
+
+            // mc.gameRenderer.
+
+
+            // mc.setScreen(null);
+            // mc.createTelemetryManager().
+            // setRenderViewEntity();
             if(
                 Minecraft.getInstance().player != null &&
                 Minecraft.getInstance().level != null &&
                 Minecraft.getInstance().getCameraEntity() != null &&
                 ParmyMod.specEnt != null
             ) {
+                mc.gameRenderer.setRenderHand(false);
                 DirectionManager.Direction dir = DirectionManager.getDirectionByKey();
                 NetworkManager.sendToServer(
                     new MoveDroneC2S(

@@ -1,7 +1,5 @@
 package com.modding.parmy;
 
-import org.lwjgl.glfw.GLFW;
-
 import com.modding.parmy.entity.ModEntityTypes;
 import com.modding.parmy.entity.Drone.DroneEntity;
 import com.modding.parmy.entity.Drone.DroneRenderer;

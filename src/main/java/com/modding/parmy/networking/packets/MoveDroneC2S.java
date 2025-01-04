@@ -5,7 +5,11 @@ import java.util.function.Supplier;
 import com.modding.parmy.ParmyMod;
 import com.modding.parmy.entity.Drone.DroneEntity;
 import com.modding.parmy.utils.DirectionManager;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.math.Matrix4f;
 
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.MoverType;
@@ -39,16 +43,15 @@ public class MoveDroneC2S {
         NetworkEvent.Context context = supplier.get();
         context.enqueueWork(() -> {
             ServerPlayer player = context.getSender();
-            // player.setEntityOnShoulder(null)
-            // player.setCame
-            // player.
             if(player != null) {
                 if(direction != null) {
                     moveEntity(direction, 0.2, yAngle, xAngle);
+                } else {
+                    System.out.println(yAngle);
+                    ParmyMod.specEnt.setYRot(yAngle*-1);
+                    ParmyMod.specEnt.setXRot(xAngle*-1);
+                    ParmyMod.specEnt.setYHeadRot(yAngle);
                 };
-                ParmyMod.specEnt.setYRot(yAngle*-1);
-                ParmyMod.specEnt.setXRot(xAngle*-1);
-                ParmyMod.specEnt.setYHeadRot(yAngle);
             };
         });
         return true;

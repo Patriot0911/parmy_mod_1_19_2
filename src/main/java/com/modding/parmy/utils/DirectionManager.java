@@ -17,12 +17,12 @@ public class DirectionManager {
             case LEFT -> new Vec3(-1 * power, 0, 0);
             case RIGHT -> new Vec3(power, 0, 0);
         };
-        float yawRadians = (float) Math.toRadians(yaw);
-        float pitchRadians = (float) Math.toRadians(pitch);
-        double x = baseVec.x * Math.cos(yawRadians) - baseVec.z * Math.sin(yawRadians);
-        double z = baseVec.x * Math.sin(yawRadians) + baseVec.z * Math.cos(yawRadians);
-        double y = baseVec.y - Math.sin(pitchRadians) * power;
-        return new Vec3(x, y, z);
+        // float yawRadians = (float) Math.toRadians(yaw);
+        // float pitchRadians = (float) Math.toRadians(pitch);
+        // double x = baseVec.x * Math.cos(yawRadians) - baseVec.z * Math.sin(yawRadians);
+        // double z = baseVec.x * Math.sin(yawRadians) + baseVec.z * Math.cos(yawRadians);
+        // double y = baseVec.y - Math.sin(pitchRadians) * power;
+        return baseVec;
     };
 
     public static Direction getDirectionByKey() {

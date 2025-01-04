@@ -1,7 +1,5 @@
 package com.modding.parmy.events;
 
-import org.lwjgl.glfw.GLFW;
-
 import com.modding.parmy.ParmyMod;
 import com.modding.parmy.networking.NetworkManager;
 import com.modding.parmy.networking.packets.MoveDroneC2S;
@@ -24,16 +22,12 @@ public class ClientEvents {
     public static class ClientForgeEvents {
         @SubscribeEvent
         public static void onKeyInput(InputEvent.Key event) {
-            // if (event.getKey() == GLFW.GLFW_KEY_LEFT_SHIFT && event.getAction() == GLFW.GLFW_PRESS) {
-                // System.out.println("TRIED TO BLOCK");
-                // event.setCanceled(true);
-            // }
-
             if(KeyBinding.SPAWN_DRONE_KEY.isDown()) {
                 System.out.println("tested2");
                 if(ParmyMod.specEnt == null) {
                     NetworkManager.sendToServer(new SpawnCowC2S());
                 } else {
+                    ParmyMod.specEnt.setFlying(false);
                     ParmyMod.specEnt = null;
                     mc.setCameraEntity(null);
                 };

@@ -27,7 +27,7 @@ public class DroneEntity extends FlyingMob implements IAnimatable {
         super(pEntityType, level);
     }
 
-    private boolean isFlying = false;
+    private boolean isFlying = true;
 
     public void setFlying(boolean flying) {
         this.isFlying = flying;
@@ -45,8 +45,8 @@ public class DroneEntity extends FlyingMob implements IAnimatable {
             if (this.isOnGround()) {
                 this.setDeltaMovement(this.getDeltaMovement().multiply(0.9, -0.5, 0.9));
             }
-        }
-    }
+        };
+    };
 
     @SuppressWarnings("removal")
     private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {

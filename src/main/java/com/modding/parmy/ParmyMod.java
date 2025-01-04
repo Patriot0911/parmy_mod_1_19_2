@@ -8,10 +8,14 @@ import com.modding.parmy.networking.NetworkManager;
 import com.modding.parmy.utils.KeyBinding;
 
 import net.minecraft.client.renderer.entity.EntityRenderers;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.level.ChunkPos;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.world.ForgeChunkManager;
+import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -28,7 +32,7 @@ public class ParmyMod
 {
     public static final String MOD_ID = "parmy";
 
-    public static Entity specEnt = null;
+    public static DroneEntity specEnt = null;
 
     public ParmyMod() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();

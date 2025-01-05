@@ -1,5 +1,8 @@
 package com.modding.parmy.utils;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import net.minecraft.world.phys.Vec3;
 
 public class DirectionManager {
@@ -10,35 +13,45 @@ public class DirectionManager {
         RIGHT
     }
 
-    public static Vec3 getVecByDirection(DirectionManager.Direction direction, double power, float yaw, float pitch) {
-        Vec3 baseVec = switch (direction) {
-            case FORWARD -> new Vec3(0, 0, power);
-            case BACKWARD -> new Vec3(0, 0, -1 * power);
-            case LEFT -> new Vec3(-1 * power, 0, 0);
-            case RIGHT -> new Vec3(power, 0, 0);
+    public static Vec3 getVecByDirection(DirectionManager.Direction direction) {
+        Vec3 vec = switch (direction) {
+            case FORWARD -> new Vec3(0, 0, 1);
+            case BACKWARD -> new Vec3(0, 0, -1);
+            case LEFT -> new Vec3(1, 0, 0);
+            case RIGHT -> new Vec3(-1, 0, 0);
         };
-        // float yawRadians = (float) Math.toRadians(yaw);
-        // float pitchRadians = (float) Math.toRadians(pitch);
-        // double x = baseVec.x * Math.cos(yawRadians) - baseVec.z * Math.sin(yawRadians);
-        // double z = baseVec.x * Math.sin(yawRadians) + baseVec.z * Math.cos(yawRadians);
-        // double y = baseVec.y - Math.sin(pitchRadians) * power;
-        return baseVec;
+        return vec;
     };
 
-    public static Direction getDirectionByKey() {
+    public static Vec3 getVecByDirections(DirectionManager.Direction[] directions, double power, float yaw, float pitch) {
+        Vec3 baseVec = new Vec3(0, 0, 0);
+        System.out.println(directions.length);
+        for(int i = 0; i < directions.length; i++) {
+            baseVec = baseVec.add(
+                getVecByDirection(directions[i])
+            );
+        };
+        float yawRadians = (float) Math.toRadians(yaw);
+        double x = baseVec.x * Math.cos(yawRadians) - baseVec.z * Math.sin(yawRadians);
+        double z = baseVec.x * Math.sin(yawRadians) + baseVec.z * Math.cos(yawRadians);
+        return new Vec3(x, baseVec.y, z).scale(power);
+    };
+
+    public static List<Direction> getDirectionsByKeys() {
+        List<Direction> dirs = new ArrayList<Direction>();
         if(KeyBinding.MOVE_FORWARD_KEY.isDown()) {
-            return Direction.FORWARD;
+            dirs.add(Direction.FORWARD);
         };
         if(KeyBinding.MOVE_BACKWARD_KEY.isDown()) {
-            return Direction.BACKWARD;
+            dirs.add(Direction.BACKWARD);
         };
         if(KeyBinding.MOVE_LEFT_KEY.isDown()) {
-            return Direction.LEFT;
+            dirs.add(Direction.LEFT);
         };
         if(KeyBinding.MOVE_RIGHT_KEY.isDown()) {
-            return Direction.RIGHT;
+            dirs.add(Direction.RIGHT);
         };
-        return null;
+        return dirs.size() > 0 ? dirs : null;
     };
 };
 

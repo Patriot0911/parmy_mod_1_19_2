@@ -47,6 +47,7 @@ public class SpawnCowC2S {
             RenderSystem.applyModelViewMatrix();
 
             // player.teleportTo(0, 0, 0);
+            // mc.setCameraEntity(ParmyMod.specEnt);
             // player.setCamera(ParmyMod.specEnt);
             player.connection.send(
                 new ClientboundSetCameraPacket(ParmyMod.specEnt)

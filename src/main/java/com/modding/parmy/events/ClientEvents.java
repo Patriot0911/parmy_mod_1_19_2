@@ -1,5 +1,7 @@
 package com.modding.parmy.events;
 
+import java.util.List;
+
 import com.modding.parmy.ParmyMod;
 import com.modding.parmy.networking.NetworkManager;
 import com.modding.parmy.networking.packets.MoveDroneC2S;
@@ -42,7 +44,8 @@ public class ClientEvents {
 
             // mc.gameRenderer.
 
-
+            if (event.phase != TickEvent.Phase.END)
+                return;
             // mc.setScreen(null);
             // mc.createTelemetryManager().
             // setRenderViewEntity();
@@ -53,10 +56,11 @@ public class ClientEvents {
                 ParmyMod.specEnt != null
             ) {
                 mc.gameRenderer.setRenderHand(false);
-                DirectionManager.Direction dir = DirectionManager.getDirectionByKey();
+                List<DirectionManager.Direction> dirs = DirectionManager.getDirectionsByKeys();
+                System.out.println(mc.player.getYRot());
                 NetworkManager.sendToServer(
                     new MoveDroneC2S(
-                        dir,
+                        dirs,
                         mc.player.getYRot(),
                         mc.player.getXRot()*-1
                     )

@@ -1,15 +1,12 @@
 package com.modding.parmy.networking.packets;
 
+import java.util.List;
 import java.util.function.Supplier;
 
 import com.modding.parmy.ParmyMod;
 import com.modding.parmy.entity.Drone.DroneEntity;
 import com.modding.parmy.utils.DirectionManager;
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Matrix4f;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.MoverType;
@@ -17,24 +14,41 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.network.NetworkEvent;
 
 public class MoveDroneC2S {
-    private final DirectionManager.Direction direction;
+    private final DirectionManager.Direction[] directions;
     private final float yAngle;
     private final float xAngle;
 
-    public MoveDroneC2S(DirectionManager.Direction direction, float yAngle, float xAngle) {
-        this.direction = direction;
+    public MoveDroneC2S(List<DirectionManager.Direction> directions, float yAngle, float xAngle) {
+        this.directions =
+            directions == null ? null :
+            directions.toArray(new DirectionManager.Direction[0]);
         this.yAngle = yAngle;
         this.xAngle = xAngle;
     }
 
     public MoveDroneC2S(FriendlyByteBuf buf) {
-        this.direction = buf.readNullable(buffer -> buffer.readEnum(DirectionManager.Direction.class));
+        int directionsLen = buf.readInt();
+        if(directionsLen > 0) {
+            this.directions = new DirectionManager.Direction[directionsLen];
+            for(int i = 0; i < directionsLen; i++) {
+                this.directions[i] = buf.readEnum(DirectionManager.Direction.class);
+            };
+        } else {
+            this.directions = null;
+        };
         this.yAngle = buf.readFloat();
         this.xAngle = buf.readFloat();
     }
 
     public void toBytes(FriendlyByteBuf buf) {
-        buf.writeNullable(direction, (buffer, dir) -> buffer.writeEnum(dir));
+        if(this.directions != null) {
+            buf.writeInt(this.directions.length);
+            for(int i = 0; i < this.directions.length; i++) {
+                buf.writeEnum(this.directions[i]);
+            };
+        } else {
+            buf.writeInt(0);
+        };
         buf.writeFloat(yAngle);
         buf.writeFloat(xAngle);
     }
@@ -44,12 +58,12 @@ public class MoveDroneC2S {
         context.enqueueWork(() -> {
             ServerPlayer player = context.getSender();
             if(player != null) {
-                if(direction != null) {
-                    moveEntity(direction, 0.2, yAngle, xAngle);
+                ParmyMod.specEnt.setYRot(yAngle*-1);
+                ParmyMod.specEnt.setXRot(xAngle*-1);
+                ParmyMod.specEnt.setYHeadRot(0);
+                if(this.directions != null) {
+                    moveEntity(this.directions, 0.4, yAngle, xAngle);
                 } else {
-                    System.out.println(yAngle);
-                    ParmyMod.specEnt.setYRot(yAngle*-1);
-                    ParmyMod.specEnt.setXRot(xAngle*-1);
                     ParmyMod.specEnt.setYHeadRot(yAngle);
                 };
             };
@@ -57,10 +71,11 @@ public class MoveDroneC2S {
         return true;
     };
 
-    public static void moveEntity(DirectionManager.Direction direction, double speed, float yaw, float pitch) {
+    public static void moveEntity(DirectionManager.Direction[] directions, double speed, float yaw, float pitch) {
         DroneEntity entity = (DroneEntity) ParmyMod.specEnt;
         if(entity != null) {
-            Vec3 movement = DirectionManager.getVecByDirection(direction, speed, yaw, pitch);
+            Vec3 movement = DirectionManager.getVecByDirections(directions, speed, yaw, pitch);
+            System.out.println(movement);
             entity.move(MoverType.SELF, movement);
         };
     };

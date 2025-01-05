@@ -58,12 +58,16 @@ public class MoveDroneC2S {
         context.enqueueWork(() -> {
             ServerPlayer player = context.getSender();
             if(player != null) {
-                ParmyMod.specEnt.setYRot(yAngle*-1);
-                ParmyMod.specEnt.setXRot(xAngle*-1);
-                ParmyMod.specEnt.setYHeadRot(0);
                 if(this.directions != null) {
-                    moveEntity(this.directions, 0.4, yAngle, xAngle);
+                    ParmyMod.specEnt.setXRot(-1*xAngle);
+                    ParmyMod.specEnt.setYRot(yAngle);
+                    moveEntity(this.directions, 0.4, yAngle, xAngle*-1);
+                    ParmyMod.specEnt.setYHeadRot(0);
+                    ParmyMod.specEnt.setYBodyRot(xAngle);
                 } else {
+                    ParmyMod.specEnt.setYRot(yAngle*-1);
+                    ParmyMod.specEnt.setXRot(xAngle*-1);
+                    ParmyMod.specEnt.setYBodyRot(xAngle);
                     ParmyMod.specEnt.setYHeadRot(yAngle);
                 };
             };

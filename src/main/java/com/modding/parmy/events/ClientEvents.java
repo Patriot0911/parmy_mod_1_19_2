@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.modding.parmy.ParmyMod;
 import com.modding.parmy.networking.NetworkManager;
+import com.modding.parmy.networking.packets.DropDroneBombC2S;
 import com.modding.parmy.networking.packets.MoveDroneC2S;
 import com.modding.parmy.networking.packets.SpawnCowC2S;
 import com.modding.parmy.utils.DirectionManager;
@@ -31,6 +32,13 @@ public class ClientEvents {
                     ParmyMod.specEnt = null;
                     mc.setCameraEntity(mc.player);
                 };
+            };
+            if(KeyBinding.SPAWN_DRONE_BOMB_KEY.isDown()) {
+                if(ParmyMod.specEnt != null) {
+                    NetworkManager.sendToServer(
+                        new DropDroneBombC2S()
+                    );
+                }
             };
         }
         @SubscribeEvent

@@ -2,6 +2,7 @@ package com.modding.parmy.entity;
 
 import com.modding.parmy.ParmyMod;
 import com.modding.parmy.entity.Drone.DroneEntity;
+import com.modding.parmy.entity.DroneBomb.DroneBombProjectile;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
@@ -16,13 +17,24 @@ public class ModEntityTypes {
             DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, ParmyMod.MOD_ID);
 
     public static final RegistryObject<EntityType<DroneEntity>> DRONE =
-            ENTITY_TYPES.register("drone",
-                () -> EntityType.Builder.of(DroneEntity::new, MobCategory.MISC)
-                    .sized(0.6f, 0.4f)
-                    .build(
-                        new ResourceLocation(ParmyMod.MOD_ID, "drone").toString()
-                    )
-            );
+        ENTITY_TYPES.register("drone",
+            () -> EntityType.Builder.of(DroneEntity::new, MobCategory.MISC)
+                .sized(0.6f, 0.4f)
+                .clientTrackingRange(16)
+                .updateInterval(2)
+                .build(
+                    new ResourceLocation(ParmyMod.MOD_ID, "drone").toString()
+                )
+        );
+
+    public static final RegistryObject<EntityType<DroneBombProjectile>> DRONE_BOMB =
+        ENTITY_TYPES.register("drone_bomb",
+            () -> EntityType.Builder.<DroneBombProjectile>of(DroneBombProjectile::new, MobCategory.MISC)
+                .sized(0.25F, 0.25F)
+                .clientTrackingRange(64)
+                .updateInterval(1)
+                .build("drone_bomb")
+        );
 
 
     public static void register(IEventBus eventBus) {

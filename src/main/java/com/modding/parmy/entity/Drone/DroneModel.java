@@ -8,7 +8,7 @@ import software.bernie.geckolib3.model.AnimatedGeoModel;
 public class DroneModel extends AnimatedGeoModel<DroneEntity> {
     @Override
     public ResourceLocation getModelResource(DroneEntity object) {
-        return new ResourceLocation(ParmyMod.MOD_ID, "geo/test_drone.geo.json");
+        return new ResourceLocation(ParmyMod.MOD_ID, "geo/drone.geo.json");
     };
     @Override
     public ResourceLocation getTextureResource(DroneEntity object) {

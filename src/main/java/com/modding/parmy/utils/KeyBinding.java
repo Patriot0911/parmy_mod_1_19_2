@@ -10,11 +10,13 @@ import net.minecraftforge.client.settings.KeyConflictContext;
 public class KeyBinding {
     public static final String KEY_CATEGORY_DRONE = "key.category.parmy.drones";
     private static final String KEY_SPAWN_DRONE = "key.parmy.spawn_drone";
+    private static final String KEY_SPAWN_DRONE_BOMB = "key.parmy.spawn_drone_bomb";
     private static final String KEY_MOVE_FWD_DRONE = "key.parmy.move_forward_drone";
     private static final String KEY_MOVE_BWD_DRONE = "key.parmy.move_backward_drone";
     private static final String KEY_MOVE_LEFT_DRONE = "key.parmy.move_left_drone";
     private static final String KEY_MOVE_RIGHT_DRONE = "key.parmy.move_right_drone";
 
+    // TEST DRONE ACTIONS
     public static final KeyMapping SPAWN_DRONE_KEY = new KeyMapping(
         KEY_SPAWN_DRONE,
         KeyConflictContext.IN_GAME,
@@ -22,6 +24,15 @@ public class KeyBinding {
         GLFW.GLFW_KEY_C,
         KEY_CATEGORY_DRONE
     );
+    public static final KeyMapping SPAWN_DRONE_BOMB_KEY = new KeyMapping(
+        KEY_SPAWN_DRONE_BOMB,
+        KeyConflictContext.IN_GAME,
+        InputConstants.Type.KEYSYM,
+        GLFW.GLFW_KEY_F,
+        KEY_CATEGORY_DRONE
+    );
+
+    // DRONE MOVEMENT
     public static final KeyMapping MOVE_FORWARD_KEY = new KeyMapping(
         KEY_MOVE_FWD_DRONE,
         KeyConflictContext.IN_GAME,

@@ -5,6 +5,7 @@ import java.util.function.Supplier;
 import com.modding.parmy.ParmyMod;
 import com.modding.parmy.entity.ModEntityTypes;
 import com.modding.parmy.entity.Drone.DroneEntity;
+import com.modding.parmy.enums.DroneTypes;
 import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.minecraft.client.Minecraft;
@@ -30,7 +31,7 @@ public class SpawnCowC2S {
             ServerPlayer player = context.getSender();
             ServerLevel level = player.getLevel();
             Vec3 position = player.position();
-            ParmyMod.specEnt = new DroneEntity(ModEntityTypes.DRONE.get(), level);
+            ParmyMod.specEnt = new DroneEntity(ModEntityTypes.DRONE.get(), level, DroneTypes.DROP_BOMB);
             ParmyMod.specEnt.setPos(position.x, position.y, position.z);
             level.addFreshEntity(ParmyMod.specEnt);
             Minecraft mc = Minecraft.getInstance();

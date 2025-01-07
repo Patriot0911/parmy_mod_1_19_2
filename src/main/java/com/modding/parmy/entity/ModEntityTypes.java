@@ -18,7 +18,7 @@ public class ModEntityTypes {
 
     public static final RegistryObject<EntityType<DroneEntity>> DRONE =
         ENTITY_TYPES.register("drone",
-            () -> EntityType.Builder.of(DroneEntity::new, MobCategory.MISC)
+            () -> EntityType.Builder.<DroneEntity>of(DroneEntity::new, MobCategory.MISC)
                 .sized(0.6f, 0.4f)
                 .clientTrackingRange(16)
                 .updateInterval(2)

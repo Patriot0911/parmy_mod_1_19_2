@@ -10,8 +10,10 @@ public class DirectionManager {
         FORWARD,
         BACKWARD,
         LEFT,
-        RIGHT
-    }
+        RIGHT,
+        UP,
+        DOWN,
+    };
 
     public static Vec3 getVecByDirection(DirectionManager.Direction direction) {
         Vec3 vec = switch (direction) {
@@ -19,6 +21,8 @@ public class DirectionManager {
             case BACKWARD -> new Vec3(0, 0, -1);
             case LEFT -> new Vec3(1, 0, 0);
             case RIGHT -> new Vec3(-1, 0, 0);
+            case UP -> new Vec3(0, 1, 0);
+            case DOWN -> new Vec3(0, -1, 0);
         };
         return vec;
     };
@@ -49,6 +53,12 @@ public class DirectionManager {
         };
         if(KeyBinding.MOVE_RIGHT_KEY.isDown()) {
             dirs.add(Direction.RIGHT);
+        };
+        if(KeyBinding.MOVE_DOWN_KEY.isDown()) {
+            dirs.add(Direction.DOWN);
+        };
+        if(KeyBinding.MOVE_UP_KEY.isDown()) {
+            dirs.add(Direction.UP);
         };
         return dirs.size() > 0 ? dirs : null;
     };

@@ -2,7 +2,6 @@ package com.modding.parmy;
 
 import com.modding.parmy.entity.ModEntityTypes;
 import com.modding.parmy.entity.Drone.DroneEntity;
-import com.modding.parmy.entity.Drone.DroneModel;
 import com.modding.parmy.entity.Drone.DroneRenderer;
 import com.modding.parmy.entity.DroneBomb.DroneBombModelRenderer;
 import com.modding.parmy.items.ModItems;

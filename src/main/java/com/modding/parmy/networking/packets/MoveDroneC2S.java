@@ -7,14 +7,10 @@ import com.modding.parmy.ParmyMod;
 import com.modding.parmy.entity.Drone.DroneEntity;
 import com.modding.parmy.utils.DirectionManager;
 
-import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.server.level.TicketType;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.MoverType;
-import net.minecraft.world.level.ChunkPos;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.network.NetworkEvent;
 
@@ -66,7 +62,7 @@ public class MoveDroneC2S {
                 if(this.directions != null) {
                     ParmyMod.specEnt.setXRot(-1*xAngle);
                     ParmyMod.specEnt.setYRot(yAngle);
-                    moveEntity(this.directions, 0.4, yAngle, xAngle*-1);
+                    moveEntity(player, this.directions, 0.4, yAngle, xAngle*-1);
                     ParmyMod.specEnt.setYHeadRot(yAngle);
                     ParmyMod.specEnt.setYBodyRot(yAngle);
                 } else {
@@ -80,11 +76,11 @@ public class MoveDroneC2S {
         return true;
     };
 
-    public static void moveEntity(DirectionManager.Direction[] directions, double speed, float yaw, float pitch) {
+    public static void moveEntity(Entity player, DirectionManager.Direction[] directions, double speed, float yaw, float pitch) {
         DroneEntity entity = (DroneEntity) ParmyMod.specEnt;
         if(entity != null) {
             Vec3 movement = DirectionManager.getVecByDirections(directions, speed, yaw, pitch);
-            System.out.println(movement);
+            player.move(MoverType.SELF, movement);
             entity.move(MoverType.SELF, movement);
         };
     };

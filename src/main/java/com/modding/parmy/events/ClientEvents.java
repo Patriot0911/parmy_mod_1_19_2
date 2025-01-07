@@ -10,7 +10,6 @@ import com.modding.parmy.utils.DirectionManager;
 import com.modding.parmy.utils.KeyBinding;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.screens.Screen;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.event.TickEvent;
@@ -25,30 +24,19 @@ public class ClientEvents {
         @SubscribeEvent
         public static void onKeyInput(InputEvent.Key event) {
             if(KeyBinding.SPAWN_DRONE_KEY.isDown()) {
-                System.out.println("tested2");
                 if(ParmyMod.specEnt == null) {
                     NetworkManager.sendToServer(new SpawnCowC2S());
                 } else {
                     ParmyMod.specEnt.setFlying(false);
                     ParmyMod.specEnt = null;
-                    mc.setCameraEntity(null);
+                    mc.setCameraEntity(mc.player);
                 };
-            };
-            if(Screen.hasShiftDown()) {
-                event.setCanceled(true);
             };
         }
         @SubscribeEvent
         public static void onClientTick(TickEvent.ClientTickEvent event) {
-
-
-            // mc.gameRenderer.
-
             if (event.phase != TickEvent.Phase.END)
                 return;
-            // mc.setScreen(null);
-            // mc.createTelemetryManager().
-            // setRenderViewEntity();
             if(
                 Minecraft.getInstance().player != null &&
                 Minecraft.getInstance().level != null &&
@@ -57,7 +45,6 @@ public class ClientEvents {
             ) {
                 mc.gameRenderer.setRenderHand(false);
                 List<DirectionManager.Direction> dirs = DirectionManager.getDirectionsByKeys();
-                System.out.println(mc.player.getYRot());
                 NetworkManager.sendToServer(
                     new MoveDroneC2S(
                         dirs,

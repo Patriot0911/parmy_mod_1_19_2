@@ -21,7 +21,6 @@ public class ModItems {
     );
 
     public static void register(IEventBus eventBus) {
-        System.out.println("TESTED ITEMS");
         ITEMS.register(eventBus);
     }
 }

@@ -9,10 +9,13 @@ import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.protocol.game.ClientboundSetCameraPacket;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.server.level.TicketType;
+import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.network.NetworkEvent;
 
@@ -27,6 +30,22 @@ public class SpawnCowC2S {
 
     public void toBytes(FriendlyByteBuf buf) {
 
+    }
+
+    public void loadChunksAroundDrone(ServerLevel level, DroneEntity drone, int chunkRadius) {
+        ChunkPos chunkPos = new ChunkPos(new BlockPos(drone.getX(), drone.getY(), drone.getZ()));
+
+        for (int x = -chunkRadius; x <= chunkRadius; x++) {
+            for (int z = -chunkRadius; z <= chunkRadius; z++) {
+                ChunkPos pos = new ChunkPos(chunkPos.x + x, chunkPos.z + z);
+                level.getChunkSource().addRegionTicket(
+                    TicketType.POST_TELEPORT,
+                    pos,
+                    3, // Рівень завантаження, чим менше значення — тим важливіше завантаження.
+                    drone.getId()
+                );
+            }
+        }
     }
 
     public boolean handle(Supplier<NetworkEvent.Context> supplier) {
@@ -46,13 +65,11 @@ public class SpawnCowC2S {
             RenderSystem.getModelViewStack().setIdentity();
             RenderSystem.applyModelViewMatrix();
 
-            // player.teleportTo(0, 0, 0);
-            // mc.setCameraEntity(ParmyMod.specEnt);
-            // player.setCamera(ParmyMod.specEnt);
+            loadChunksAroundDrone(level, ParmyMod.specEnt, 25);
+
             player.connection.send(
                 new ClientboundSetCameraPacket(ParmyMod.specEnt)
             );
-            // mc.setCameraEntity(ParmyMod.specEnt);
         });
         return true;
     }

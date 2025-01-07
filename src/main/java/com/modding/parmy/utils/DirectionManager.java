@@ -25,7 +25,6 @@ public class DirectionManager {
 
     public static Vec3 getVecByDirections(DirectionManager.Direction[] directions, double power, float yaw, float pitch) {
         Vec3 baseVec = new Vec3(0, 0, 0);
-        System.out.println(directions.length);
         for(int i = 0; i < directions.length; i++) {
             baseVec = baseVec.add(
                 getVecByDirection(directions[i])
@@ -34,7 +33,7 @@ public class DirectionManager {
         float yawRadians = (float) Math.toRadians(yaw);
         double x = baseVec.x * Math.cos(yawRadians) - baseVec.z * Math.sin(yawRadians);
         double z = baseVec.x * Math.sin(yawRadians) + baseVec.z * Math.cos(yawRadians);
-        return new Vec3(x, baseVec.y, z).scale(power);
+        return new Vec3(x, baseVec.y, z).normalize().scale(power);
     };
 
     public static List<Direction> getDirectionsByKeys() {

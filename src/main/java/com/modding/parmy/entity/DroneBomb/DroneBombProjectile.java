@@ -5,7 +5,6 @@ import java.util.UUID;
 import com.modding.parmy.entity.Drone.DroneEntity;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.server.level.ServerLevel;
@@ -39,6 +38,7 @@ public class DroneBombProjectile extends Projectile implements IAnimatable {
         this.setPos(x, y, z);
         this.explosionStrength = explosionStrength;
         this.droneParentId = parentUuid;
+        // setOwner();
     };
 
     @Override
@@ -81,17 +81,17 @@ public class DroneBombProjectile extends Projectile implements IAnimatable {
             explosionStrength,
             Explosion.BlockInteraction.DESTROY
         );
-        for(int i = 0; i < 10; i++) {
-            level.addParticle(
-                ParticleTypes.ENCHANT,
-                this.getX() + random.nextGaussian() * 0.8,
-                this.getY() + random.nextGaussian() * 0.8,
-                this.getZ() + random.nextGaussian() * 0.8,
-                random.nextGaussian() * 0.4,
-                random.nextGaussian() * 0.4,
-                random.nextGaussian() * 0.4
-            );
-        };
+        // for(int i = 0; i < 10; i++) {
+        //     level.addParticle(
+        //         ParticleTypes.ENCHANT,
+        //         this.getX() + random.nextGaussian() * 0.8,
+        //         this.getY() + random.nextGaussian() * 0.8,
+        //         this.getZ() + random.nextGaussian() * 0.8,
+        //         random.nextGaussian() * 0.4,
+        //         random.nextGaussian() * 0.4,
+        //         random.nextGaussian() * 0.4
+        //     );
+        // };
     };
 
     public DroneEntity getParent(ServerLevel level) {

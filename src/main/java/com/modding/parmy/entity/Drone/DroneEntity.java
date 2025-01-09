@@ -7,18 +7,23 @@ import java.util.UUID;
 import com.modding.parmy.entity.ModEntityTypes;
 import com.modding.parmy.entity.DroneBomb.DroneBombProjectile;
 import com.modding.parmy.enums.DroneTypes;
+import com.modding.parmy.items.ModItems;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.FlyingMob;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
@@ -61,6 +66,16 @@ public class DroneEntity extends FlyingMob implements IAnimatable {
             this.bombsCount = 1;
             this.bombsList = new ArrayList<DroneBombProjectile>();
         };
+    };
+
+    @Override
+    public ItemStack getPickedResult(HitResult target) {
+        return new ItemStack(ModItems.DRONE_ITEM.get());
+    };
+
+    @Override
+    public boolean isAlliedTo(Entity entity) {
+        return entity instanceof Player; // add owner
     };
 
     public void setFlying(boolean flying) {

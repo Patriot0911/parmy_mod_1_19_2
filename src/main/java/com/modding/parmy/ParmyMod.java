@@ -9,6 +9,8 @@ import com.modding.parmy.networking.NetworkManager;
 import com.modding.parmy.utils.KeyBinding;
 
 import net.minecraft.client.renderer.entity.EntityRenderers;
+import net.minecraft.client.renderer.item.ItemProperties;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
 import net.minecraftforge.common.MinecraftForge;
@@ -60,6 +62,11 @@ public class ParmyMod
         public static void onClientSetup(FMLClientSetupEvent event) {
             EntityRenderers.register(ModEntityTypes.DRONE.get(), DroneRenderer::new);
             EntityRenderers.register(ModEntityTypes.DRONE_BOMB.get(), DroneBombModelRenderer::new);
+            ItemProperties.register(
+                ModItems.DRONE_ITEM.get(),
+                new ResourceLocation("drone_item"),
+                (stack, world, entity, seed) -> { return 0; }
+            );
         };
     };
 

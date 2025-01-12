@@ -9,6 +9,7 @@ import net.minecraftforge.client.settings.KeyConflictContext;
 
 public class KeyBinding {
     public static final String KEY_CATEGORY_DRONE = "key.category.parmy.drones";
+    private static final String KEY_ART_SHELL_LAUNCH = "key.parmy.launch_art_shell";
     private static final String KEY_SPAWN_DRONE = "key.parmy.spawn_drone";
     private static final String KEY_SPAWN_DRONE_BOMB = "key.parmy.spawn_drone_bomb";
     private static final String KEY_MOVE_FWD_DRONE = "key.parmy.move_forward_drone";
@@ -17,6 +18,15 @@ public class KeyBinding {
     private static final String KEY_MOVE_RIGHT_DRONE = "key.parmy.move_right_drone";
     private static final String KEY_MOVE_UP_DRONE = "key.parmy.move_up_drone";
     private static final String KEY_MOVE_DOWN_DRONE = "key.parmy.move_down_drone";
+
+    // TEST ART ACTIONS
+    public static final KeyMapping LAUNCH_SHELL_KEY = new KeyMapping(
+        KEY_ART_SHELL_LAUNCH,
+        KeyConflictContext.IN_GAME,
+        InputConstants.Type.KEYSYM,
+        GLFW.GLFW_KEY_H,
+        KEY_CATEGORY_DRONE
+    );
 
     // TEST DRONE ACTIONS
     public static final KeyMapping SPAWN_DRONE_KEY = new KeyMapping(

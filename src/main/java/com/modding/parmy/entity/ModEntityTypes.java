@@ -1,6 +1,7 @@
 package com.modding.parmy.entity;
 
 import com.modding.parmy.ParmyMod;
+import com.modding.parmy.entity.ArtilleryCannonDef.ArtilleryShellDefProjectile;
 import com.modding.parmy.entity.Drone.DroneEntity;
 import com.modding.parmy.entity.DroneBomb.DroneBombProjectile;
 
@@ -34,6 +35,15 @@ public class ModEntityTypes {
                 .clientTrackingRange(64)
                 .updateInterval(1)
                 .build("drone_bomb")
+        );
+
+    public static final RegistryObject<EntityType<ArtilleryShellDefProjectile>> ARTILLERY_SHELL_DEF =
+        ENTITY_TYPES.register("art_shell_def",
+            () -> EntityType.Builder.<ArtilleryShellDefProjectile>of(ArtilleryShellDefProjectile::new, MobCategory.MISC)
+                .sized(0.25F, 0.25F)
+                .clientTrackingRange(64)
+                .updateInterval(1)
+                .build("art_shell_def")
         );
 
 

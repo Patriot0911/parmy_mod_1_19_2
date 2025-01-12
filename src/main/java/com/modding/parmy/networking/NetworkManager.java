@@ -2,8 +2,9 @@ package com.modding.parmy.networking;
 
 import com.modding.parmy.ParmyMod;
 import com.modding.parmy.networking.packets.MoveDroneC2S;
-import com.modding.parmy.networking.packets.SpawnCowC2S;
+import com.modding.parmy.networking.packets.LeaveCameraC2S;
 import com.modding.parmy.networking.packets.DropDroneBombC2S;
+import com.modding.parmy.networking.packets.LaunchArtShellC2S;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
@@ -31,10 +32,10 @@ public class NetworkManager {
 
         INSTANCE = net;
 
-        net.messageBuilder(SpawnCowC2S.class, nextId(), NetworkDirection.PLAY_TO_SERVER)
-                .decoder(SpawnCowC2S::new)
-                .encoder(SpawnCowC2S::toBytes)
-                .consumerMainThread(SpawnCowC2S::handle)
+        net.messageBuilder(LeaveCameraC2S.class, nextId(), NetworkDirection.PLAY_TO_SERVER)
+                .decoder(LeaveCameraC2S::new)
+                .encoder(LeaveCameraC2S::toBytes)
+                .consumerMainThread(LeaveCameraC2S::handle)
                 .add();
 
         net.messageBuilder(MoveDroneC2S.class, nextId(), NetworkDirection.PLAY_TO_SERVER)
@@ -47,6 +48,11 @@ public class NetworkManager {
             .decoder(DropDroneBombC2S::new)
             .encoder(DropDroneBombC2S::toBytes)
             .consumerMainThread(DropDroneBombC2S::handle)
+            .add();
+        net.messageBuilder(LaunchArtShellC2S.class, nextId(), NetworkDirection.PLAY_TO_SERVER)
+            .decoder(LaunchArtShellC2S::new)
+            .encoder(LaunchArtShellC2S::toBytes)
+            .consumerMainThread(LaunchArtShellC2S::handle)
             .add();
     }
 

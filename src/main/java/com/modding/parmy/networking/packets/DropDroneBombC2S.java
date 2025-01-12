@@ -29,8 +29,7 @@ public class DropDroneBombC2S {
         context.enqueueWork(() -> {
             if(ParmyMod.specEnt == null)
                 return;
-            // ServerPlayer player = context.getSender();
-            // add conditions for pl to use it
+            // add check owner
             ParmyMod.specEnt.dropBomb();
         });
         return true;

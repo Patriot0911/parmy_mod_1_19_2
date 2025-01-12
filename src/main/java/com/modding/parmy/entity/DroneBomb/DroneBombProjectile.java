@@ -38,7 +38,6 @@ public class DroneBombProjectile extends Projectile implements IAnimatable {
         this.setPos(x, y, z);
         this.explosionStrength = explosionStrength;
         this.droneParentId = parentUuid;
-        // setOwner();
     };
 
     @Override
@@ -73,25 +72,18 @@ public class DroneBombProjectile extends Projectile implements IAnimatable {
     };
 
     private void explode() {
+        Entity parent = this.getParent(
+            (ServerLevel) level
+        );
+        setOwner(parent);
         this.level.explode(
-            this,
+            parent == null ? this : parent,
             this.getX(),
             this.getY(),
             this.getZ(),
             explosionStrength,
             Explosion.BlockInteraction.DESTROY
         );
-        // for(int i = 0; i < 10; i++) {
-        //     level.addParticle(
-        //         ParticleTypes.ENCHANT,
-        //         this.getX() + random.nextGaussian() * 0.8,
-        //         this.getY() + random.nextGaussian() * 0.8,
-        //         this.getZ() + random.nextGaussian() * 0.8,
-        //         random.nextGaussian() * 0.4,
-        //         random.nextGaussian() * 0.4,
-        //         random.nextGaussian() * 0.4
-        //     );
-        // };
     };
 
     public DroneEntity getParent(ServerLevel level) {

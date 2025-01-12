@@ -1,6 +1,7 @@
 package com.modding.parmy;
 
 import com.modding.parmy.entity.ModEntityTypes;
+import com.modding.parmy.entity.ArtilleryCannonDef.ArtilleryShellDefModelRenderer;
 import com.modding.parmy.entity.Drone.DroneEntity;
 import com.modding.parmy.entity.Drone.DroneRenderer;
 import com.modding.parmy.entity.DroneBomb.DroneBombModelRenderer;
@@ -62,6 +63,7 @@ public class ParmyMod
         public static void onClientSetup(FMLClientSetupEvent event) {
             EntityRenderers.register(ModEntityTypes.DRONE.get(), DroneRenderer::new);
             EntityRenderers.register(ModEntityTypes.DRONE_BOMB.get(), DroneBombModelRenderer::new);
+            EntityRenderers.register(ModEntityTypes.ARTILLERY_SHELL_DEF.get(), ArtilleryShellDefModelRenderer::new);
             ItemProperties.register(
                 ModItems.DRONE_ITEM.get(),
                 new ResourceLocation("drone_item"),
@@ -80,6 +82,7 @@ public class ParmyMod
             event.register(KeyBinding.MOVE_LEFT_KEY);
             event.register(KeyBinding.MOVE_RIGHT_KEY);
             event.register(KeyBinding.SPAWN_DRONE_BOMB_KEY);
+            event.register(KeyBinding.LAUNCH_SHELL_KEY);
         }
     }
 }

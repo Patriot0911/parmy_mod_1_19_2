@@ -5,8 +5,9 @@ import java.util.List;
 import com.modding.parmy.ParmyMod;
 import com.modding.parmy.networking.NetworkManager;
 import com.modding.parmy.networking.packets.DropDroneBombC2S;
+import com.modding.parmy.networking.packets.LaunchArtShellC2S;
 import com.modding.parmy.networking.packets.MoveDroneC2S;
-import com.modding.parmy.networking.packets.SpawnCowC2S;
+import com.modding.parmy.networking.packets.LeaveCameraC2S;
 import com.modding.parmy.utils.DirectionManager;
 import com.modding.parmy.utils.KeyBinding;
 
@@ -25,13 +26,7 @@ public class ClientEvents {
         @SubscribeEvent
         public static void onKeyInput(InputEvent.Key event) {
             if(KeyBinding.SPAWN_DRONE_KEY.isDown()) {
-                if(ParmyMod.specEnt == null) {
-                    NetworkManager.sendToServer(new SpawnCowC2S());
-                } else {
-                    ParmyMod.specEnt.setFlying(false);
-                    ParmyMod.specEnt = null;
-                    mc.setCameraEntity(mc.player);
-                };
+                NetworkManager.sendToServer(new LeaveCameraC2S());
             };
             if(KeyBinding.SPAWN_DRONE_BOMB_KEY.isDown()) {
                 if(ParmyMod.specEnt != null) {
@@ -39,6 +34,11 @@ public class ClientEvents {
                         new DropDroneBombC2S()
                     );
                 }
+            };
+            if(KeyBinding.LAUNCH_SHELL_KEY.isDown()) {
+                NetworkManager.sendToServer(
+                    new LaunchArtShellC2S()
+                );
             };
         }
         @SubscribeEvent
@@ -51,7 +51,6 @@ public class ClientEvents {
                 Minecraft.getInstance().getCameraEntity() != null &&
                 ParmyMod.specEnt != null
             ) {
-                mc.gameRenderer.setRenderHand(false);
                 List<DirectionManager.Direction> dirs = DirectionManager.getDirectionsByKeys();
                 NetworkManager.sendToServer(
                     new MoveDroneC2S(
